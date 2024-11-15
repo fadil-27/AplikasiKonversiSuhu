@@ -15,6 +15,12 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
+        // Inisialisasi komponen seperti biasa
+        jComboBox1 = new javax.swing.JComboBox<>();
+
+        // Atur item di dalam jComboBox1
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Celsius", "Fahrenheit", "Kelvin", "Reamur" }));
+
     }
 
     /**
@@ -51,7 +57,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Farenheit", "Celcius", "Kelvin", "Reamur", " " }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -173,7 +179,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Celsius", "Fahrenheit", "Kelvin", "Reamur" }));
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -191,6 +197,12 @@ public class NewJFrame extends javax.swing.JFrame {
         else if (jRadioButton3.isSelected()) skalaTujuan = jRadioButton3.getText(); // Kelvin
         else if (jRadioButton4.isSelected()) skalaTujuan = jRadioButton4.getText(); // Reamur
 
+        // Periksa jika skala tujuan tidak dipilih
+        if (skalaTujuan.isEmpty()) {
+            jLabel3.setText("Pilih skala tujuan!");
+            return; // Keluar dari method jika skala tujuan belum dipilih
+        }
+
         // Variabel untuk menyimpan hasil konversi
         double hasil = 0;
 
@@ -199,18 +211,22 @@ public class NewJFrame extends javax.swing.JFrame {
             if (skalaTujuan.equals("Fahrenheit")) hasil = suhuAwal * 9/5 + 32;
             else if (skalaTujuan.equals("Kelvin")) hasil = suhuAwal + 273.15;
             else if (skalaTujuan.equals("Reamur")) hasil = suhuAwal * 4/5;
+            else hasil = suhuAwal; // Untuk konversi Celsius ke Celsius
         } else if (skalaAwal.equals("Fahrenheit")) {
             if (skalaTujuan.equals("Celsius")) hasil = (suhuAwal - 32) * 5/9;
             else if (skalaTujuan.equals("Kelvin")) hasil = (suhuAwal + 459.67) * 5/9;
             else if (skalaTujuan.equals("Reamur")) hasil = (suhuAwal - 32) * 4/9;
+            else hasil = suhuAwal; // Untuk konversi Fahrenheit ke Fahrenheit
         } else if (skalaAwal.equals("Kelvin")) {
             if (skalaTujuan.equals("Celsius")) hasil = suhuAwal - 273.15;
             else if (skalaTujuan.equals("Fahrenheit")) hasil = suhuAwal * 9/5 - 459.67;
             else if (skalaTujuan.equals("Reamur")) hasil = (suhuAwal - 273.15) * 4/5;
+            else hasil = suhuAwal; // Untuk konversi Kelvin ke Kelvin
         } else if (skalaAwal.equals("Reamur")) {
             if (skalaTujuan.equals("Celsius")) hasil = suhuAwal * 5/4;
             else if (skalaTujuan.equals("Fahrenheit")) hasil = suhuAwal * 9/4 + 32;
             else if (skalaTujuan.equals("Kelvin")) hasil = suhuAwal * 5/4 + 273.15;
+            else hasil = suhuAwal; // Untuk konversi Reamur ke Reamur
         }
 
         // Tampilkan hasil konversi di jLabel3
@@ -220,6 +236,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // Tampilkan pesan kesalahan jika input tidak valid
         jLabel3.setText("Input tidak valid! Masukkan angka.");
     }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
